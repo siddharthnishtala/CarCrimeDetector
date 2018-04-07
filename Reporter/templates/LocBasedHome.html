@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Nearest Sightings | Car Crime Reporter </title>
+    <script src='{% static "geolocation.js" %}'></script>
+</head>
+<body>
+    <p>
+        <button onclick="geoFindMe()"> Show my location </button>
+    </p>
+    <div id="out"></div>
+</body>
+</html>

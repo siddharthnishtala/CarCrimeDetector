@@ -28,3 +28,7 @@ class HomePage(TemplateView):
             return render(request, 'landing.html', context=None)
         else:
             return render(request, 'home.html', context={"user": request.user})
+
+class LocBasedHomePage(TemplateView):
+    def get(self, request, **kwargs):
+        return render(request, 'LocBasedHome.html', context=None)
