@@ -3,3 +3,6 @@ templates, references etc
 ./idea
 .idea
 db.sqlite3
+CarCrimeReporter/__pycache__
+Reporter/__pycache__
+Reporter/migrations/__pycache__

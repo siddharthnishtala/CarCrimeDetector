@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
-from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
+from Reporter.models import Detector, Sighting
 
 
 class LandingPage(TemplateView):
@@ -31,4 +31,15 @@ class HomePage(TemplateView):
 
 class LocBasedHomePage(TemplateView):
     def get(self, request, **kwargs):
-        return render(request, 'LocBasedHome.html', context=None)
+
+        lat = float(request.GET.get('lat',''))
+        long = float(request.GET.get('long',''))
+        # Get all sightings
+
+        # Temporary solution
+        sightings = Sighting.objects.all()
+        sightings = sorted(sightings, key=lambda sighting: ((sighting.detector.latitude - lat) ** 2 + (
+                    sighting.detector.longitude - long) ** 2)**0.5)
+
+        print(sightings)
+        return render(request, 'LocBasedHome.html', context={'sightings':sightings})

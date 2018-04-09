@@ -4,12 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <title> Nearest Sightings | Car Crime Reporter </title>
-    <script src='{% static "geolocation.js" %}'></script>
 </head>
 <body>
     <p>
-        <button onclick="geoFindMe()"> Show my location </button>
+        {% if sightings %}
+            <ul>
+                {% for sighting in sightings %}
+                    <li><a>{{ sighting.license_number }}</a></li>
+                    <li><a>{{ sighting.time }}</a></li>
+                    <li><a>{{ sighting.detector.address }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No new sightings.</p>
+        {% endif %}
     </p>
-    <div id="out"></div>
 </body>
 </html>
