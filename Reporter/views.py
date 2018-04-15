@@ -43,3 +43,13 @@ class LocBasedHomePage(TemplateView):
 
         print(sightings)
         return render(request, 'LocBasedHome.html', context={'sightings':sightings})
+
+class DataPage(TemplateView):
+    def get(self, request, **kwargs):
+        messages.error(request, "Page inaccessible!")
+        return render(request, 'landing.html', context=None)
+
+    def post(self, request, **kwargs):
+        dist = request.POST.get('dist')
+        print(dist)
+        return render(request, 'landing.html', context=None)
