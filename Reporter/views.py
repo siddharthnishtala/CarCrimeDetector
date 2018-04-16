@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from Reporter.models import Detector, Sighting
+from django.http import HttpResponse
 
 
 class LandingPage(TemplateView):
@@ -41,7 +42,6 @@ class LocBasedHomePage(TemplateView):
         sightings = sorted(sightings, key=lambda sighting: ((sighting.detector.latitude - lat) ** 2 + (
                     sighting.detector.longitude - long) ** 2)**0.5)
 
-        print(sightings)
         return render(request, 'LocBasedHome.html', context={'sightings':sightings})
 
 class DataPage(TemplateView):
@@ -53,3 +53,9 @@ class DataPage(TemplateView):
         dist = request.POST.get('dist')
         print(dist)
         return render(request, 'landing.html', context=None)
+
+
+def image(request):
+    pk = request.GET.get('pk', '')
+    sighting = Sighting.objects.get(pk=pk)
+    return render(request, 'image.html', context={'sighting':sighting})

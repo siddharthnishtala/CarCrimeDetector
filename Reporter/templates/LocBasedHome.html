@@ -36,7 +36,7 @@
             <td>{{ sighting.license_number }}</td>
 			<td>{{ sighting.time }}</td>
 			<td>{{ sighting.detector.address }}</td>
-			<td>{{ sighting.image }}</td>
+			<td> <a href="/images?pk={{sighting.pk}}"> View Image </a> </td>
 		</tr>
 		{% endfor %}
 	{% else %}
