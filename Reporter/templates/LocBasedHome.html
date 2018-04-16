@@ -4,20 +4,42 @@
 <head>
     <meta charset="UTF-8">
     <title> Nearest Sightings | Car Crime Reporter </title>
+	<style>
+		table {
+			font-family: arial, sans-serif;
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		td, th {
+			border: 1px solid #dddddd;
+			text-align: left;
+			padding: 8px;
+		}
+
+		tr:nth-child(even) {
+			background-color: #dddddd;
+		}
+	</style>
 </head>
 <body>
-    <p>
-        {% if sightings %}
-            <ul>
-                {% for sighting in sightings %}
-                    <li><a>{{ sighting.license_number }}</a></li>
-                    <li><a>{{ sighting.time }}</a></li>
-                    <li><a>{{ sighting.detector.address }}</a></li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No new sightings.</p>
-        {% endif %}
-    </p>
+	<table>
+  <tr>
+    <th>License Number</th>
+    <th>Time of Sighting</th>
+    <th>Location</th>
+  </tr>
+    {% if sightings %}
+		{% for sighting in sightings %}
+		<tr>
+            <td>{{ sighting.license_number }}</td>
+			<td>{{ sighting.time }}</td>
+			<td>{{ sighting.detector.address }}</td>
+		</tr>
+		{% endfor %}
+	{% else %}
+		<p>No new sightings.</p>
+	{% endif %}
+	</table>
 </body>
 </html>
