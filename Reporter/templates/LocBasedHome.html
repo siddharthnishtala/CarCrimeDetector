@@ -28,6 +28,7 @@
     <th>License Number</th>
     <th>Time of Sighting</th>
     <th>Location</th>
+	<th>Image</th>
   </tr>
     {% if sightings %}
 		{% for sighting in sightings %}
@@ -35,6 +36,7 @@
             <td>{{ sighting.license_number }}</td>
 			<td>{{ sighting.time }}</td>
 			<td>{{ sighting.detector.address }}</td>
+			<td>{{ sighting.image }}</td>
 		</tr>
 		{% endfor %}
 	{% else %}
