@@ -3,7 +3,9 @@ from django.views.generic import TemplateView
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from Reporter.models import Detector, Sighting
-from django.http import HttpResponse
+from django.utils import timezone
+from django.core.files.base import ContentFile
+import base64
 
 
 class LandingPage(TemplateView):
@@ -30,19 +32,19 @@ class HomePage(TemplateView):
         else:
             return render(request, 'home.html', context={"user": request.user})
 
+
 class LocBasedHomePage(TemplateView):
     def get(self, request, **kwargs):
 
         lat = float(request.GET.get('lat',''))
         long = float(request.GET.get('long',''))
-        # Get all sightings
 
-        # Temporary solution
         sightings = Sighting.objects.all()
         sightings = sorted(sightings, key=lambda sighting: ((sighting.detector.latitude - lat) ** 2 + (
                     sighting.detector.longitude - long) ** 2)**0.5)
 
         return render(request, 'LocBasedHome.html', context={'sightings':sightings})
+
 
 class DataPage(TemplateView):
     def get(self, request, **kwargs):
@@ -50,8 +52,19 @@ class DataPage(TemplateView):
         return render(request, 'landing.html', context=None)
 
     def post(self, request, **kwargs):
-        dist = request.POST.get('dist')
-        print(dist)
+        try:
+            license_number = request.POST.get('license_number')
+            detector_id = request.POST.get('pk')
+            encoded_image = request.POST.get('en_image')
+            sighting = Sighting()
+            sighting.license_number = license_number
+            sighting.detector = Detector.objects.get(pk=detector_id)
+            sighting.time = timezone.now()
+            sighting.image = ContentFile(base64.b64decode(encoded_image), license_number + ".jpg")
+            sighting.save()
+        except:
+            print("Could not process request!")
+
         return render(request, 'landing.html', context=None)
 
 

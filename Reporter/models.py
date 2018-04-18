@@ -12,7 +12,7 @@ class Detector(models.Model):
 class Sighting(models.Model):
     detector = models.ForeignKey(Detector, on_delete=models.CASCADE)
     license_number = models.CharField(max_length=10)
-    time = models.TimeField()
+    time = models.DateTimeField()
     image = models.ImageField()
 
     def __str__(self):
