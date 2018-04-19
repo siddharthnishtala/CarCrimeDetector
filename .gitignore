@@ -6,3 +6,8 @@ db.sqlite3
 CarCrimeReporter/__pycache__
 Reporter/__pycache__
 Reporter/migrations/__pycache__
+CarCrimeReporter/__pycache__/settings.cpython-36.pyc
+CarCrimeReporter/__pycache__/urls.cpython-36.pyc
+Reporter/__pycache__/models.cpython-36.pyc
+Reporter/__pycache__/urls.cpython-36.pyc
+Reporter/__pycache__/views.cpython-36.pyc

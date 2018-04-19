@@ -20,10 +20,22 @@
 		tr:nth-child(even) {
 			background-color: #dddddd;
 		}
-	</style>
+	</style><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src='{% static "geolocation.js" %}'></script>
+	
 </head>
+
 <body>
-	<table>
+Show sightings from the last:
+<select id="dropdown" onchange="urlRefresh()">
+	<option value="15"> 15 minutes</option>
+  	<option value="100"> 1 hour</option>
+  	<option value="600"> 6 hours</option>
+  	<option value="1200"> 12 hours</option>
+	<option value="2400"> 24 hours</option>
+	<option value="-1" selected="selected">1000 years</option>
+</select>
+<table id="table">
   <tr>
     <th>License Number</th>
     <th>Time of Sighting</th>
@@ -42,6 +54,6 @@
 	{% else %}
 		<p>No new sightings.</p>
 	{% endif %}
-	</table>
+</table>	
 </body>
 </html>
