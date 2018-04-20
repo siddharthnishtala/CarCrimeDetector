@@ -54,6 +54,7 @@ class DataPage(TemplateView):
     def post(self, request, **kwargs):
         try:
             license_number = request.POST.get('license_number')
+            number = CrimeNumber.objects.get(license_number=license_number)
             detector_id = request.POST.get('pk')
             encoded_image = request.POST.get('en_image')
             sighting = Sighting()
@@ -63,7 +64,7 @@ class DataPage(TemplateView):
             sighting.image = ContentFile(base64.b64decode(encoded_image), license_number + ".jpg")
             sighting.save()
         except:
-            print("Could not process request!")
+            print("Detected number not in crime database!")
 
         return render(request, 'landing.html', context=None)
 
