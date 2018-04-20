@@ -1,0 +1,25 @@
+<!-- Reporter/templates/landing.html -->
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title> Add License Plate Number | Car Crime Reporter </title>
+</head>
+<body>
+    <form id="addNumber" method="post" action="/addcrimedata/">
+        {% csrf_token %}
+        <h1 id="add1">Login</h1>
+        <input name="plate" type="text" placeholder="Add License Plate Number" required="required" class="input pass"/>
+        <input type="submit" value="Add Number" class="inputButtonsign"/>
+    </form>
+</body>
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li
+            {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+

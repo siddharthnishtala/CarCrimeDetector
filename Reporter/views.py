@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
-from Reporter.models import Detector, Sighting
+from Reporter.models import Detector, Sighting, CrimeNumber
 from django.utils import timezone
 from django.core.files.base import ContentFile
 import base64
@@ -66,6 +66,33 @@ class DataPage(TemplateView):
             print("Could not process request!")
 
         return render(request, 'landing.html', context=None)
+
+
+class AddNumbersPage(TemplateView):
+    def get(self, request, **kwargs):
+        if not request.user.is_authenticated:
+            messages.error(request, "Please sign up or login!")
+            return render(request, 'landing.html', context=None)
+        else:
+            return render(request, 'addNumber.html', context=None)
+
+    def post(self, request, **kwargs):
+        license_number = request.POST.get('plate')
+        crimeNumber = CrimeNumber()
+        crimeNumber.license_number = license_number
+        crimeNumber.date_added = timezone.now()
+        crimeNumber.user = request.user.username
+        crimeNumber.save()
+
+        return redirect('CrimeDataPage')
+
+
+class CrimeDataPage(TemplateView):
+    def get(self, request, **kwargs):
+
+        numbers = CrimeNumber.objects.all().order_by(('-date_added'))
+
+        return render(request, 'data.html', context={'CrimeNumbers':numbers})
 
 
 def image(request):

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> Crime Database | Car Crime Reporter </title>
+	<style>
+		table {
+			font-family: arial, sans-serif;
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		td, th {
+			border: 1px solid #dddddd;
+			text-align: left;
+			padding: 8px;
+		}
+
+		tr:nth-child(even) {
+			background-color: #dddddd;
+		}
+	</style><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src='{% static "geolocation.js" %}'></script>
+	
+</head>
+
+<body>
+<!--Show sightings from the last:-->
+<!--<select id="dropdown" onchange="urlRefresh()">-->
+	<!--<option value="15"> 15 minutes</option>-->
+  	<!--<option value="100"> 1 hour</option>-->
+  	<!--<option value="600"> 6 hours</option>-->
+  	<!--<option value="1200"> 12 hours</option>-->
+	<!--<option value="2400"> 24 hours</option>-->
+	<!--<option value="-1" selected="selected">1000 years</option>-->
+<!--</select>-->
+<table id="table">
+  <tr>
+    <th>License Number</th>
+    <th>Added On</th>
+    <th>Added By</th>
+  </tr>
+    {% if CrimeNumbers %}
+		{% for number in CrimeNumbers %}
+		<tr>
+            <td>{{ number.license_number }}</td>
+			<td>{{ number.date_added }}</td>
+			<td>{{ number.user }}</td>
+		</tr>
+		{% endfor %}
+	{% else %}
+		<p>No numbers in database.</p>
+	{% endif %}
+</table>	
+</body>
+</html>
