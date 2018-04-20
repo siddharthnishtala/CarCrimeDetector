@@ -14,7 +14,7 @@ function geoFindMe() {
     output.innerHTML = '<p>Latitude is </p>';
 
     var img = new Image();
-    img.src = "https://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=17&size=300x300&sensor=false";
+    img.src = "http://maps.googleapis.com/maps/api/staticmap?center=" + latitude + "," + longitude + "&zoom=17&size=300x300&sensor=false";
 
     output.appendChild(img);
     window.location.href= url;
@@ -54,13 +54,13 @@ $( document ).ready(function() {
 		x=rows[i].getElementsByTagName("td")[1];
 		rowDate= x.innerHTML.split(/[\s,:]+/);
 		
-		if(rowDate[5]=="p.m."){
+		if((rowDate[5]=="p.m.")&&(parseInt(rowDate[3])<12)){
 			rowTime= ((parseInt(rowDate[3])+12)*100)+parseInt(rowDate[4]);
 		}
-		else if(parseInt(rowDate[3])!=12)
-			rowTime= (parseInt(rowDate[3])*100)+parseInt(rowDate[4]);
-		else
+		else if((rowDate[5]!="p.m.")&&(parseInt(rowDate[3])==12))
 			rowTime= parseInt(rowDate[4]);
+		else
+			rowTime= (parseInt(rowDate[3])*100)+parseInt(rowDate[4]);
 		
 		var currentDate= new Date();
 		day= currentDate.getDate();
