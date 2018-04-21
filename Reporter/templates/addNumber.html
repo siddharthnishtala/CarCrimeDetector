@@ -1,16 +1,42 @@
 <!-- Reporter/templates/landing.html -->
 <!DOCTYPE html>
+{% load staticfiles %}
 <head>
     <meta charset="UTF-8">
     <title> Add License Plate Number | Car Crime Reporter </title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src='{% static "geolocation.js" %}'></script>
 </head>
 <body>
-    <form id="addNumber" method="post" action="/addcrimedata/">
-        {% csrf_token %}
-        <h1 id="add1">Login</h1>
-        <input name="plate" type="text" placeholder="Add License Plate Number" required="required" class="input pass"/>
-        <input type="submit" value="Add Number" class="inputButtonsign"/>
-    </form>
+	<div style="margin: 20px;"></div>
+	<div class="row row-content">
+		<div class="col-md-10">
+			<form id="addNumber" method="post" action="/addcrimedata/">
+        		{% csrf_token %}
+        		<h1 id="add1">Add number</h1>
+				<div style="margin: 20px;"></div>
+				<input name="plate" type="text" style="width: 20%;" placeholder="Add License Plate Number" required="required" class="input pass"/>
+				<input type="submit" value="Add Number" class="inputButtonsign"/>
+    		</form>
+		</div>
+		<div class="col-md-2">
+			<ul class="nav nav-pills flex-column">
+				<li class="nav-item">
+					<a class="nav-link" href="/home/location">Sightings</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/crimedata/">Offender Database</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" href="#">Add Offender</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
+    
 </body>
 
 {% if messages %}

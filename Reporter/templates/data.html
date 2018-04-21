@@ -20,7 +20,10 @@
 		tr:nth-child(even) {
 			background-color: #dddddd;
 		}
-	</style><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	</style>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src='{% static "geolocation.js" %}'></script>
 	
 </head>
@@ -35,23 +38,42 @@
 	<!--<option value="2400"> 24 hours</option>-->
 	<!--<option value="-1" selected="selected">1000 years</option>-->
 <!--</select>-->
-<table id="table">
-  <tr>
-    <th>License Number</th>
-    <th>Added On</th>
-    <th>Added By</th>
-  </tr>
-    {% if CrimeNumbers %}
-		{% for number in CrimeNumbers %}
-		<tr>
-            <td>{{ number.license_number }}</td>
-			<td>{{ number.date_added }}</td>
-			<td>{{ number.user }}</td>
-		</tr>
-		{% endfor %}
-	{% else %}
-		<p>No numbers in database.</p>
-	{% endif %}
-</table>	
+	<div style="margin: 20px;"></div>
+	<div class="row row-content">
+		<div class="col-md-10">
+			<table id="table">
+				<tr>
+					<th>License Number</th>
+					<th>Added On</th>
+					<th>Added By</th>
+				</tr>
+				{% if CrimeNumbers %}
+				{% for number in CrimeNumbers %}
+					<tr>
+						<td>{{ number.license_number }}</td>
+						<td>{{ number.date_added }}</td>
+						<td>{{ number.user }}</td>
+				</tr>
+				{% endfor %}
+				{% else %}
+					<p>No numbers in database.</p>
+				{% endif %}
+			</table>
+		</div>
+		<div class="col-md-2">
+			<ul class="nav nav-pills flex-column">
+				<li class="nav-item">
+					<a class="nav-link" href="/home/location">Sightings</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" href="#">Offender Database</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/addcrimedata/">Add Offender</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	
 </body>
 </html>

@@ -20,7 +20,11 @@
 		tr:nth-child(even) {
 			background-color: #dddddd;
 		}
-	</style><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	</style>
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src='{% static "geolocation.js" %}'></script>
 	
 </head>
@@ -35,25 +39,42 @@ Show sightings from the last:
 	<option value="2400"> 24 hours</option>
 	<option value="-1" selected="selected">1000 years</option>
 </select>
-<table id="table">
-  <tr>
-    <th>License Number</th>
-    <th>Time of Sighting</th>
-    <th>Location</th>
-	<th>Image</th>
-  </tr>
-    {% if sightings %}
-		{% for sighting in sightings %}
-		<tr>
-            <td>{{ sighting.license_number }}</td>
-			<td>{{ sighting.time }}</td>
-			<td>{{ sighting.detector.address }}</td>
-			<td> <a href="/images?pk={{sighting.pk}}"> View Image </a> </td>
-		</tr>
-		{% endfor %}
-	{% else %}
-		<p>No new sightings.</p>
-	{% endif %}
-</table>	
+<div class="row row-content">
+	<div class="col-md-10">
+		<table id="table">
+			<tr>
+				<th>License Number</th>
+				<th>Time of Sighting</th>
+				<th>Location</th>
+				<th>Image</th>
+			</tr>
+			{% if sightings %}
+				{% for sighting in sightings %}
+					<tr>
+						<td>{{ sighting.license_number }}</td>
+						<td>{{ sighting.time }}</td>
+						<td>{{ sighting.detector.address }}</td>
+						<td> <a href="/images?pk={{sighting.pk}}"> View Image </a> </td>
+					</tr>
+				{% endfor %}
+			{% else %}
+				<p>No new sightings.</p>
+			{% endif %}
+		</table>	
+	</div>
+	<div class="col-md-2">
+		<ul class="nav nav-pills flex-column">
+			<li class="nav-item">
+				<a class="nav-link active" href="#">Sightings</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/crimedata/">Offender Database</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="/addcrimedata/">Add Offender</a>
+			</li>
+		</ul>
+	</div>
+</div>
 </body>
 </html>

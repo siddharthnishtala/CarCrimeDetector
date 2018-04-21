@@ -32,6 +32,7 @@ function geoFindMe() {
 }
 
 
+
 function urlRefresh(){
 	var x= document.getElementById("dropdown").value;
 	if(window.location.href.indexOf('&value=')==-1)
