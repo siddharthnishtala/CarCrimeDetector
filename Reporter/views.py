@@ -36,8 +36,14 @@ class HomePage(TemplateView):
 class LocBasedHomePage(TemplateView):
     def get(self, request, **kwargs):
 
-        lat = float(request.GET.get('lat',''))
-        long = float(request.GET.get('long',''))
+        if request.session.get('lat', None) is None:
+            lat = float(request.GET.get('lat', ''))
+            long = float(request.GET.get('long', ''))
+            request.session['lat'] = str(lat)
+            request.session['long'] = str(long)
+        else:
+            lat = float(request.session.get('lat'))
+            long = float(request.session.get('long'))
 
         sightings = Sighting.objects.all()
         sightings = sorted(sightings, key=lambda sighting: ((sighting.detector.latitude - lat) ** 2 + (
