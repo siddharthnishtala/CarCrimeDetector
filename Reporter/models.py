@@ -24,3 +24,6 @@ class CrimeNumber(models.Model):
     license_number = models.CharField(max_length=10)
     date_added = models.DateTimeField()
     user = models.CharField(max_length=150)
+	
+	def __str__(self):
+        return self.license_number

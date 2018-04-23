@@ -13,19 +13,23 @@ class LandingPage(TemplateView):
         return render(request, 'landing.html', context=None)
 
     def post(self, request, **kwargs):
+		# User Authentication
         username = request.POST.get("username")
         password = request.POST.get("password")
         user = authenticate(username=username, password=password)
         if user is not None:
+			# Logging the user in and redirecting to home page
             login(request, user)
             return redirect('HomePage')
         else:
+			# Unsuccessful log in
             messages.error(request, "Login unsuccessful!")
             return render(request, 'landing.html', context=None)
 
 
 class HomePage(TemplateView):
     def get(self, request, **kwargs):
+		# Checking if user is authenticated before accessing home page
         if not request.user.is_authenticated:
             messages.error(request, "Please sign up or login!")
             return render(request, 'landing.html', context=None)
@@ -35,7 +39,7 @@ class HomePage(TemplateView):
 
 class LocBasedHomePage(TemplateView):
     def get(self, request, **kwargs):
-
+		# Getting location of user
         if request.session.get('lat', None) is None:
             lat = float(request.GET.get('lat', ''))
             long = float(request.GET.get('long', ''))
@@ -44,7 +48,8 @@ class LocBasedHomePage(TemplateView):
         else:
             lat = float(request.session.get('lat'))
             long = float(request.session.get('long'))
-
+		
+		# Getting all the reported sightings and sorting them by distance
         sightings = Sighting.objects.all()
         sightings = sorted(sightings, key=lambda sighting: ((sighting.detector.latitude - lat) ** 2 + (
                     sighting.detector.longitude - long) ** 2)**0.5)
@@ -59,6 +64,7 @@ class DataPage(TemplateView):
 
     def post(self, request, **kwargs):
         try:
+			# Creating a sighting if license plate number exists in crime database
             license_number = request.POST.get('license_number')
             number = CrimeNumber.objects.get(license_number=license_number)
             detector_id = request.POST.get('pk')
@@ -77,6 +83,7 @@ class DataPage(TemplateView):
 
 class AddNumbersPage(TemplateView):
     def get(self, request, **kwargs):
+		# Checking if user is authenticated
         if not request.user.is_authenticated:
             messages.error(request, "Please sign up or login!")
             return render(request, 'landing.html', context=None)
@@ -84,6 +91,7 @@ class AddNumbersPage(TemplateView):
             return render(request, 'addNumber.html', context=None)
 
     def post(self, request, **kwargs):
+		# Adding a license plate number to crime database
         license_number = request.POST.get('plate')
         crimeNumber = CrimeNumber()
         crimeNumber.license_number = license_number
@@ -96,13 +104,14 @@ class AddNumbersPage(TemplateView):
 
 class CrimeDataPage(TemplateView):
     def get(self, request, **kwargs):
-
+		# Getting and sorting crime numbers by the data added
         numbers = CrimeNumber.objects.all().order_by(('-date_added'))
 
         return render(request, 'data.html', context={'CrimeNumbers':numbers})
 
 
 def image(request):
+	# Function to render an image
     pk = request.GET.get('pk', '')
     sighting = Sighting.objects.get(pk=pk)
     return render(request, 'image.html', context={'sighting':sighting})

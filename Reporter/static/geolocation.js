@@ -1,3 +1,4 @@
+//Function to find user location
 function geoFindMe() {
   var output = document.getElementById("out");
   var url;
@@ -32,20 +33,23 @@ function geoFindMe() {
 }
 
 
-
+//Function to update the variable value in the query, when the selection for ordering changes
 function urlRefresh(){
 	var x= document.getElementById("dropdown").value;
 	if (window.location.href.indexOf('?')==-1)
 		window.location.href=window.location.href+"?value="+x;
-	else if(window.location.href.indexOf('&value=')==-1)
-		window.location.href=window.location.href+"&value="+x;
-	else
+	else if ((window.location.href.indexOf('?value')!=-1)&&(window.location.href.indexOf('&value=')==-1))
+		window.location.href=window.location.href.substring(0, window.location.href.indexOf('?value='))+"?value="+x;
+	else if ((window.location.href.indexOf('&value=')!=-1)&&(window.location.href.indexOf('?value')==-1))
 		window.location.href=window.location.href.substring(0, window.location.href.indexOf('&value='))+"&value="+x;
+	else
+		window.location.href=window.location.href+"&value="+x;
+		
 	
 }
 
 $( document ).ready(function() {
-   
+   //function to sort the data as selected
 	function sort(hours){
 	var i, x, rowDate, rowTime, day, time;
 	
@@ -84,7 +88,7 @@ $( document ).ready(function() {
 		}
 	}
 }
-	
+	//selecting the time frame and calling the sort function
 	var query= window.location.href.substring(window.location.href.indexOf('value='));
 	var val= query.split(/[=]/);
 	//alert(val[1]);
