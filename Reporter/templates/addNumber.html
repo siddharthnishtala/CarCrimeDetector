@@ -8,6 +8,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src='{% static "geolocation.js" %}'></script>
+	<link href='{% static "styles.css" %}' rel="stylesheet">
 </head>
 <body>
 	<div style="margin: 20px;"></div>
@@ -15,9 +16,9 @@
 		<div class="col-md-10">
 			<form id="addNumber" method="post" action="/addcrimedata/">
         		{% csrf_token %}
-        		<h1 id="add1">Add Offender</h1>
+        		<h1 id="add1" style="text-align: center;"> Add Offender</h1>
 				<div style="margin: 20px;"></div>
-				<input name="plate" type="text" style="width: 20%;" placeholder="Add License Plate Number" required="required" class="input pass"/>
+				<input name="plate" type="text" placeholder="Add License Plate Number" required="required" class="input pass"/>
 				<input type="submit" value="Add Number" class="inputButtonsign"/>
     		</form>
 		</div>
